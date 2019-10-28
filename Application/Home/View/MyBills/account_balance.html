@@ -1,0 +1,67 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+    <div class="person-section clearfix">
+        <!--左分类-->
+        <include file="Public/assets_header"/>
+        <!--内容-->
+        <div class="mordrMain fr personaM-content-wrap">
+            <div class="title clearfix">
+                <ul class="clearfix fl nav">
+                    <li class="fl active hover"><a href="javascript:;">个人账户</a></li>
+                </ul>
+            </div>
+            <dl class="content-main">
+                <dd class="clearfix">
+                    <input type="hidden" name="u_id" value="{$id}">
+                    <span class="fl">账户用户:</span><span>{$username}</span>
+                </dd>
+                <dd class="clearfix">
+                    <span class="fl">账户余额:</span><span id="money"></span>
+                    <span class="sub" id="chongzhi" style="width: 60px;height: 45px;">可充值</span>
+                </dd>
+                <dd id="zhifu" style="border: 1px solid #CCCCCC">
+                    <form action="{:U('MyBills/zhifu_balance')}" method="post">
+                        <span style="border: 1px solid #CCCCCC;margin-left: 10px;"><input type="radio" name="money" value="{$money1}">{$money1}</span>
+                        <span style="border: 1px solid #CCCCCC;margin-left: 10px;"><input type="radio" name="money" value="{$money2}">{$money2}</span>
+                        <span style="border: 1px solid #CCCCCC;margin-left: 10px;"><input type="radio" name="money" value="{$money3}">{$money3}</span>
+                       <div style="margin-left: 10px;">
+                           <input type="radio" name="zfb" value="1" ><img src="/Public/Home/img/alipay.png" alt="" />
+                       </div>
+                        <div style="margin-left: 10px;">
+                            <input type="submit" value="支付" style="width:50px;height: 20px;background-color: darkred;border-radius: 15%; color: #ffffff;">
+                        </div>
+                    </form>
+                </dd>
+            </dl>
+        </div>
+        <!--右侧一键到顶 and 客服-->
+        <include file="Order/personalHomeTop"/>
+    </div>
+
+    <script src="__JS__/myBills/account_balance.js"></script>
+    <script>
+        $("#zhifu").hide();
+
+        $('#chongzhi').click(function () {
+            $("#zhifu").toggle();
+        })
+        $(document).ready(function(){
+            function account_balance(){
+               var id = $("input:hidden[name='u_id']").val();
+                $.post("{:U('MyBills/getAccount_balance')}",{'id':id},function(data){
+                    if(data.msg == 0){
+                        alert("失败");
+                    }else{
+                        $('#money').text(data.account_balance)
+                    }
+                });
+            }
+            window.onload = function(){
+                account_balance();
+            };
+        });
+    </script>
+</block>

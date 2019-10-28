@@ -1,0 +1,58 @@
+<extend name="Public/publicHTML" />
+
+<block name='content'>
+    <link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+    <section class="content ">
+        <!-- Main content -->
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-list"></i> 添加业绩规则
+                    </h3>
+                </div>
+                <div class="panel-body ">
+                    <!--表单数据-->
+                    <form  action="{:U('add_yejiData')}" method="post">
+                        <!--通用信息-->
+                        <div class="tab-content col-md-10">
+                            <div class="tab-pane active" id="tab_tongyong">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td class="col-sm-2">业绩金额规则：</td>
+                                        <td class="col-sm-4"><input type="text"
+                                                                    class="form-control validate" id="xd_money" name="xd_money">
+
+                                        </td>
+                                        <td class="col-sm-4">如果设置5，为50000元</td>
+                                    </tr>
+                                    <tr>
+                                        <td>业绩提成比例：</td>
+                                        <td>
+                                            <input type="text" class="form-control validate" id="tc_money" name="tc_money"/>
+                                        </td>
+                                        <td class="col-sm-4">如果设置5，为5%</td>
+                                    </tr>
+
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td class="col-sm-4"></td>
+                                        <td class="text-right"> <button type="submit" class="btn btn-info">
+                                            <i class="ace-icon fa fa-check bigger-110"></i> 保存
+                                        </button></td>
+                                        <td class="col-sm-4"></td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                    <!--表单数据-->
+                </div>
+            </div>
+        </div>
+    </section>
+</block>

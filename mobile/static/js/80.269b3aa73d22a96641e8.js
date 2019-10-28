@@ -1,0 +1,2 @@
+webpackJsonp([80],{229:function(e,o,t){var s=t(114)(t(476),null,null,null);e.exports=s.exports},476:function(e,o,t){"use strict";Object.defineProperty(o,"__esModule",{value:!0});var s=window.location.href,l=s.split("?"),n=l[1].split("="),r=n[1];o.default={created:function(){console.log(s),console.log(r),sessionStorage.setItem("user_ID",r),localStorage.setItem("user_ID",r),this.$router.push({path:"/home"})}}}});
+//# sourceMappingURL=80.269b3aa73d22a96641e8.js.map

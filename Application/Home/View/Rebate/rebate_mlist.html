@@ -1,0 +1,65 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+    <style>
+        .btn-info {
+            color: #fff;
+            background-color: #5bc0de;
+            border-color: #46b8da;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+    </style>
+
+
+    <div class="person-section clearfix">
+        <!--左分类-->
+        <include file="Public/assets_header"/>
+        <!--内容-->
+        <div class="mordrMain fr personaM-content-wrap">
+            <div class="title clearfix">
+                <ul class="clearfix fl nav">
+                    <li class="fl active hover"><a href="javascript:;">个人业绩</a></li>
+                </ul>
+            </div>
+            <dl class="content-main">
+                <dd class="clearfix">
+                    <span class="fl">账户用户:</span><span>{$user_name}</span>
+                </dd>
+                <dd class="clearfix">
+                    <span class="fl">业绩金额:</span><span>{$price_rebate}</span>
+                        <span>(可提现{$tixian_money})</span>
+                        <span>
+                            <a onclick="Tool.alertEdit('{:U('yeji_tixian',array('tixian_money'=>$tixian_money))}', '提现', 800, 600)"  class="btn btn-info" >提现
+                            </a>
+                        </span>
+                </dd>
+            </dl>
+        </div>
+        <!--右侧一键到顶 and 客服-->
+        <include file="Order/personalHomeTop"/>
+    </div>
+    <script src="__COMMON__/js/alert.js"></script>
+</block>

@@ -1,0 +1,58 @@
+<extend name="Public/publicHTML" />
+<block name="content">
+    <div class="nav">
+        <div class="nav_title">
+            <h4>
+                <img class="nav_img" src="__PUBLIC__/Admin/img/tab.gif" /><span
+                    class="nav_a">弹幕设置</span>
+            </h4>
+        </div>
+
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0"
+               class="list_table">
+            <thead>
+            <tr>
+                <td width="10%"><div align="center">ID</div></td>
+                <td width="30%"><div align="center">弹幕内容</div></td>
+                <td width="20%"><div align="center">屏幕距离</div></td>
+                <td width="20%"><div align="center">修改时间</div></td>
+                <td width="20%"><div align="center">操作</div></td>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="data" item="vo">
+                <tr>
+                    <td height="50"><div align="center">{$vo.tid}</div></td>
+                    <td><div align="center">{$vo.tcontent}</div></td>
+                    <td><div align="center">{$vo.tdistance}px</div></td>
+                    <td><div align="center">{$vo.xiugaitime|date='Y-m-d H:i:s',###}</div></td>
+<!--                    {$vo.post_modified|date='Y-m-d H:i:s',###}-->
+                    <td><div align="center">
+                         <a class="a_button"  href="javascript:;" onclick="ediitt({$vo.tid});">编辑</a> </if>
+                    </div></td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+    </div>
+
+    <script type="text/javascript">
+        var ADMIN_EDIT = "{:U('danmu_edit')}";
+    </script>
+    <script>
+        //编辑弹幕
+        function ediitt(id) {
+            parent.layer.open({
+                type: 2,
+                shadeClose: true,
+                shade: 0.5,
+                area: ['600px', '350px'],
+                title: '编辑弹幕信息',
+                content: ADMIN_EDIT
+
+            });
+        }
+    </script> </block>

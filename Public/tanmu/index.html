@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="http://pc.shopsn1.cn/__PUBLIC__/tanmu/dist/css/barrager.css">
+</head>
+
+</html>
+<script type="text/javascript" src="static/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="dist/js/jquery.barrager.min.js"></script>
+<script type="text/javascript">
+    String.prototype.format = function(args) {
+        var result = this;
+        if (arguments.length < 1) {
+            return result;
+        }
+        var data = arguments;
+        if (arguments.length == 1 && typeof (args) == "object") {
+            data = args;
+        }
+        for (var key in data) {
+            var value = data[key];
+            if (undefined != value) {
+                result = result.replace("{" + key + "}", value);
+            }
+        }
+        return result;
+    }
+    var  barrager_code=
+        'var item={\n'+
+        "   img:'{img}', //图片 \n"+
+        "   info:'{info}', //文字 \n"+
+        "   href:'{href}', //链接 \n"+
+        "   close:{close}, //显示关闭按钮 \n"+
+        "   speed:{speed}, //延迟,单位秒,默认6 \n"+
+        "   bottom:{bottom}, //距离底部高度,单位px,默认随机 \n"+
+        "   color:'{color}', //颜色,默认白色 \n"+
+        "   old_ie_color:'{old_ie_color}', //ie低版兼容色,不能与网页背景相同,默认黑色 \n"+
+        " }\n"+
+        "$('body').barrager(item);"
+    ;
+
+    var myobject={
+        value:0,
+        inc: function  run111(){
+            var  info='恭喜你支付成功';
+            (info == '' ) ?  info='请填写弹幕文字' : info=info;
+            var  href='http://www.jq22.com';
+            var  speed=6;
+            var  bottom=100;
+            var  code=barrager_code;
+            if($('input:radio[name=bottomradio]:checked').val() == 0){
+                var  window_height=$(window).height()-150;
+                bottom=Math.floor(Math.random()*window_height+40);
+                code=code.replace("   bottom:{bottom}, //距离底部高度,单位px,默认随机 \n",'');
+
+            }
+            var  img='cute.png';
+            var  item={
+                'img':'static/img/'+img,
+                'info':info,
+                'href':href,
+                'close':true,
+                'speed':speed,
+                'bottom':bottom,
+                'color':'#'+'fffffff',
+                'old_ie_color':'#'+'000000'
+
+            };
+            code=code.format(item);
+            eval(code);
+        }
+    }
+    myobject.inc()
+</script>

@@ -1,0 +1,38 @@
+<extend name="Public/publicHTML" />
+<block name="content">
+
+    <form name="myform" action="{:U('danmu_save')}" method="post">
+<!--         onsubmit="return check()";-->
+        <div class="list">
+            <table width="100%" border="0" cellpadding="0" cellspacing="0"
+                   class="details">
+                <tbody>
+                <tr>
+                    <td width="32%">
+                        <label class="label">
+                            <div align="right">弹幕内容：</div>
+                        </label>
+                    </td>
+                    <td width="68%"><input type="text" name="tcontent" value="{$data['tcontent']}"></td>
+                </tr>
+                <tr>
+                    <td width="32%">
+                        <label class="label">
+                            <div align="right">弹幕高度：</div>
+                        </label>
+                    </td>
+                    <td width="68%"><input type="text" name="tdistance" value="{$data['tdistance']}"></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="footer">
+            <div class="save_button">
+                <input type="hidden" name="tid" value="{$data['tid']}" />
+                <button type="submit" class="button" style="width: 180px;">保
+                    存</button>
+            </div>
+        </div>
+    </form>
+</block>

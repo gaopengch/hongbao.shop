@@ -1,0 +1,59 @@
+<extend name="Public/publicHTML" />
+
+<block name="content">
+    <link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet"
+          href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-list"></i> 业绩记录列表
+                    </h3>
+                </div>
+                <div class="panel-body">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+
+                                <td class="text-left">序号</td>
+                                <td class="text-left">订单号</td>
+
+                                <td class="text-left">业绩奖励</td>
+                                <td class="text-left">获取方式</td>
+                                <td class="text-left">创建时间</td>
+
+                            </tr>
+                            </thead>
+                            <if>
+                            <else condition="!empty($date)"/>
+                                <volist name="date" id="vo">
+                                    <tr>
+                                        <td class="text-left">{$vo.id}</td>
+                                        <td class="text-left">{$vo.oid}</td>
+                                        <td class="text-left">{$vo.total_price}</td>
+                                        <if condition="$vo.type eq 1">
+                                            <td class="text-left">分享商品奖励</td>
+                                        <else />
+                                            <td class="text-left">自购商品奖励</td>
+                                        </if>
+                                        <td class="text-left">{$vo.time|date='Y-m-d H:i:s',###}</td>
+
+                                    </tr>
+                                </volist>
+                            </if>
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+</block>

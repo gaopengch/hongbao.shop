@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>{$intnetTitle}</title>
+    <link rel="stylesheet" href="__CSS__/pay.css"/>
+    <link rel="stylesheet" type="text/css" href="http://pc.shopsn1.cn__PUBLIC__/tanmu/dist/css/barrager.css">
+    <script src="__CDN_JQ__"></script>
+</head>
+<body>
+<input type="hidden" value="{$tanmuD['tcontent']}" id="tcontent">
+<input type="hidden" value="{$tanmuD['tdistance']}" id="tdistance">
+<div class="pay_success_header">
+    <div class="pay_success_header_auto">
+        <a href="{:U('Index/index')}"> <img src="{$logo_name}" alt="" class="pay_success_header_img"/></a>
+        <div class="pay_success_header_right">
+            <div class="pay_success_ss">
+                <form action="{:U('Goods/goodsDetails')}" method="get"> 
+                    <input type="text" class="fl input" id="pp"/>
+                    <input type="hidden" name="id" value=""/>
+                    <input type="submit" class="fl btn" id="search" onmouseover="searcher()" value="搜&nbsp;索"/>
+                    <div class="gg"></div> 
+                </form>
+            </div>
+
+            <dl class="home-hotsearch clearfix">
+                <dt class="fl">热门搜索：</dt>
+                <foreach name="hot_words" item="hot_word">
+                    <dd class="fl"><a href="{:U('Product/ProductList',['id'=>$hot_word['id']])}">{$hot_word.hot_words}</a></dd>
+                </foreach>
+            </dl>
+        </div>
+    </div>
+
+</div>
+
+<block name="content">
+	
+</block>
+
+<div class="pay_success_footer">
+    <div class="pay_success_footer_top">
+        <a href="javascript:;">于我们关</a>
+        <span>|</span>
+        <a href="javascript:;">联系我们</a>
+        <span>|</span>
+        <a href="javascript:;">加盟我们</a>
+        <span>|</span>
+        <a href="javascript:;">商城APP</a>
+        <span>|</span>
+        <a href="javascript:;">友情链接</a>
+    </div>
+    <div class="pay_success_footer_dh">{$record_number} ｜ 有任何问题请联系我们在线客服 电话：{$intnet_phone}</div>
+    <div class="pay_success_footer_dh">&copy;{$str}</div>
+</div>
+<script type="text/javascript" src="http://pc.shopsn1.cn__PUBLIC__/tanmu/static/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="http://pc.shopsn1.cn__PUBLIC__/tanmu/dist/js/jquery.barrager.min.js"></script>
+    <script>
+        $('#pp').keyup(function(){
+            var _url ="{:U('Goods/search')}";
+            var _data=$(this).val();
+            $.post(_url,{title:_data},function(data){
+                if(data.status==0){
+                    /*  layer.msg(data.message);*/
+                    return;
+                }
+                if(data.status==1){
+                    var _a = [];
+                    var _a=data.data;
+                    var _b="{:U('Goods/goodsDetails')}"
+                    var _html='';
+                    for (var i in _a){
+                        _html +='<div><a href="'+_b+'?id='+_a[i].id+'"> '+_a[i].title+'</a></div>';
+                    }
+                    $('.gg').html(_html);
+                    $('input[name="id"]').val(_a[0].id);
+                    return;
+                }
+                if(data.status==2){
+                    $('.gg').html('');
+                }
+            })
+        })
+        function searcher(){};
+        var tcontent = $('#tcontent').val();
+        var tdistance = $('#tdistance').val();
+        String.prototype.format = function(args) {
+            var result = this;
+            if (arguments.length < 1) {
+                return result;
+            }
+            var data = arguments;
+            if (arguments.length == 1 && typeof (args) == "object") {
+                data = args;
+            }
+            for (var key in data) {
+                var value = data[key];
+                if (undefined != value) {
+                    result = result.replace("{" + key + "}", value);
+                }
+            }
+            return result;
+        }
+
+        var  barrager_code=
+            "var item={"+
+            "   img:'{img}', \n"+
+            "   info:'{info}', \n"+
+            "   href:'{href}',  \n"+
+            "   close:{close},  \n"+
+            "   speed:{speed},  \n"+
+            "   bottom:{bottom}, \n"+
+            "   color:'{color}',  \n"+
+            "   old_ie_color:'{old_ie_color}', \n"+
+            " }\n"+
+            "$('body').barrager(item);"
+        ;
+        var  info= tcontent ;
+        (info == '' ) ?  info='请填写弹幕文字' : info=info;
+        var  href='http://www.jq22.com';
+        var img = '/Public/tanmu/static/img/cute.png';
+        var  speed=3;
+        var  bottom= tdistance;
+        var  code=barrager_code;
+        if($('input:radio[name=bottomradio]:checked').val() == 0){
+            var  window_height=$(window).height()-150;
+            bottom=Math.floor(Math.random()*window_height+40);
+            code=code.replace("   bottom:{bottom}, //距离底部高度,单位px,默认随机 \n",'');
+        }
+        var  item={
+            'img':img,
+            'info':info,
+            'href':href,
+            'close':true,
+            'speed':speed,
+            'bottom':bottom,
+            'color':'#'+'fffffff',
+            'old_ie_color':'#'+'000000'
+        };
+        code=code.format(item);
+        eval(code);
+    </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<extend name="Public/publicHTML" />
+
+<block name="content">
+    <link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="__CSS__/user/user.css" />
+    <div class="nav">
+        <div class="nav_title">
+            <h4>
+                <img class="nav_img" src="__PUBLIC__/Admin/img/tab.gif" /><span
+                    class="nav_a">业绩规则设置</span>
+                       <button type="button" onclick="Tool.alertEdit('{:U('add_yeji')}', '添加规则', 830, 600);" class="btn btn-primary  pull-right">
+                        <i class="fa fa-plus"></i>添加规则</i>
+                     </button>
+                   </span>
+            </h4>
+        </div>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0"
+               class="list_table">
+            <thead>
+            <tr>
+                <td width="10%"><div align="center">ID</div></td>
+                <td width="30%"><div align="center">业绩金额规则</div></td>
+                <td width="20%"><div align="center">业绩提成百分比</div></td>
+                <td width="20%"><div align="center">修改时间</div></td>
+                <td width="20%"><div align="center">操作</div></td>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="data" item="vo">
+                <tr id= "del{$vo['id']}">
+                    <td height="50"><div align="center">{$vo.id}</div></td>
+                    <td><div align="center">￥{$vo.xd_money}元</div></td>
+                    <td><div align="center">{$vo.tc_money}%</div></td>
+                    <td><div align="center">{$vo.gx_time|date='Y-m-d H:i:s',###}</div></td>
+                    <td><div align="center">
+                        <a onclick="Tool.alertEdit('{:U('yeji_edit',array('id'=>$vo['id']))}', '业绩编辑', 800, 600)" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="业绩详情"><i class="fa fa-eye"></i>
+                        </a>
+                        <a href="javascript:;" onclick='del_yeli({$vo['id']})' data-toggle="tooltip" title="" class="btn btn-info" ><i class="fa fa-sitemap"></i></a>
+                    </div></td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        del_yeli =  function(id){
+            if(confirm("确定要删除吗？"))
+            {
+                $.post("{:U('User/del_yeji')}",{'id':id},function(data){
+                    if(data == 0){
+                        alert("删除失败");
+                    }else{
+                        $('#del'+id).remove();
+                    }
+                });
+            }else
+            {
+                return false;
+            }
+        }
+    </script>
+  <script src="__COMMON__/js/alert.js"></script>
+
+</block>

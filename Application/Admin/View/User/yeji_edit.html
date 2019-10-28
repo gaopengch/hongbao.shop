@@ -1,0 +1,53 @@
+<extend name="Public/publicHTML" />
+
+
+<block name='content'>
+    <link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+    <section class="content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <i class="fa fa-list"></i> 规则信息
+                        </h3>
+                    </div>
+
+                    <div class="panel-body">
+
+                        <form action="{:U('save_yejibase')}" method="post">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <td class="col-sm-2">金额规则:</td>
+                                    <td><input type="text" class="form-control"
+                                               name="xd_money" value="{$data['xd_money']}" disabled ></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-2">提成百分比:</td>
+                                    <td><input type="text" class="form-control"
+                                               name="tc_money" value="{$data['tc_money']}"></td>
+                                    <td>{$data['tc_money']}%</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="hidden" name="id" value="{$data['id']}"></td>
+                                    <td>
+                                        <button type="submit" class="btn btn-info">
+                                            <i class="ace-icon fa fa-check bigger-110"></i> 保存
+                                        </button>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.content -->
+    </section>
+</block>
