@@ -24,40 +24,53 @@
 						<span class="fl">*身份证号：</span>
 						<input type="text" value="{$data.card_id}" class="txt fl" name="card_id" id="card_id" >
 					</dd>
-                    <dd class="clearfix">
-                        <span class="fl">*身份证正面：</span>
+					<dd class="clearfix">
+						<span class="fl">*特殊身份：</span>
+						<select name="sf_status">
+							<foreach name="sf_data" item="vo">
+								<option value="{$vo['sf_id']}" id="shenfen_{$vo['sf_id']}">{$vo['sf_shuxin']}</option>
+							</foreach>
+							<input type="hidden" id="sf_id" value="{$data['sf_status']}">
+						</select>
+					</dd>
+					<dd class="clearfix">
+						<span class="fl">*反映身份照片：</span>
+						<input  type="file"  onchange="bindAvatar1(this)" id="back_img2">
+						<if condition="$data.front_img">
+							<img class="lazy" style="width: 100px;height:100px;"  src="{$data.shenfen_img}" title="点击更换图片" >
+							<else/>
+							<img style="width: 100px;height:100px;"  src="__PUBLIC__/Home/img/failure.png" title="点击更换图片" >
+						</if>
+						<input  type="hidden" name="shenfen_img" id="back_img" value="{$data.shenfen_img}">
+					</dd>
 
+					<dd class="clearfix">
+                        <span class="fl">*身份证正面：</span>
                             <input  type="file"  onchange="bindAvatar1(this)" id="front_img2">
-                        <if condition="$data.front_img">
+                        <if condition="$data.front_img neq null">
                             <img class="lazy" style="width: 100px;height:100px;"  src="{$data.front_img}" title="点击更换图片" >
                         <else/>
-                            <img style="width: 100px;height:100px;"  src="__PUBLIC__/Home/img/failure.png" title="点击更换图片" >
+                            <img style="width: 100px;height:100px;"  src="/Public/Home/img/failure.png" title="点击更换图片" >
                         </if>
-
-                            <!--<img style="width: 100px;height:100px;"  src="__PUBLIC__/Home/img/failure.png" title="点击更换图片" >-->
                             <input  type="hidden" name="front_img" id="front_img" value="{$data.front_img}">
-
                     </dd>
-                    <dd class="clearfix">
-                        <span class="fl">*身份证反面：</span>
-
-                            <input  type="file"  onchange="bindAvatar1(this)" id="back_img2">
-                        <if condition="$data.front_img">
-                            <img class="lazy" style="width: 100px;height:100px;"  src="{$data.back_img}" title="点击更换图片" >
-                            <else/>
-                            <img style="width: 100px;height:100px;"  src="__PUBLIC__/Home/img/failure.png" title="点击更换图片" >
-                        </if>
-                            <!--<img style="width: 100px;height:100px;"  src="__PUBLIC__/Home/img/failure.png" title="点击更换图片" >-->
-                            <input  type="hidden" name="back_img" id="back_img" value="{$data.back_img}">
-
-                    </dd>
-
 					<dd class="clearfix">
 						<span class="fl"></span>
                         <notempty name="$data.id">
                             <input type="hidden" name="id" value="{$data.id}">
                         </notempty>
-						<input type="submit" value="保存" class="sub">
+						<if condition="$data['stats'] eq 1">
+							<input  value="等待审核" class="sub">
+						</if>
+						<if condition="$data['stats'] eq 2">
+							<input type="submit" value="修改" class="sub">
+						</if>
+						<if condition="$data['stats'] eq 3">
+							<input type="submit" value="重新提交" class="sub">
+						</if>
+						<if condition="$data['stats'] neq 3 AND $data['stats'] neq 2 AND $data['stats'] neq 1">
+							<input type="submit" value="添加" class="sub">
+						</if>
 					</dd>
 				</dl>
 			</form>
@@ -70,6 +83,9 @@
     var addImg = "{:U('addImg')}";
 </script>
 <script src="__JS__/truename/true_name.js"></script>
-<!-- <script src="js/header.js"></script> -->
+	<script>
+		var sf_id=$('#sf_id').val();
+		$('#shenfen_'+sf_id).attr("selected","selected");
+	</script>
 
 </block>

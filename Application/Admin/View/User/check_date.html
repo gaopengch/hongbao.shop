@@ -1,0 +1,90 @@
+<extend name="Public/publicHTML" />
+
+<block name="content">
+    <link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="__CSS__/user/user.css" />
+    <div class="nav">
+        <div class="nav_title">
+            <h4>
+                <img class="nav_img" src="__PUBLIC__/Admin/img/tab.gif" /><span
+                    class="nav_a">个人资料</span>
+                <!--                <button type="button" onclick="Tool.alertEdit('{:U('add_yeji')}', '添加规则', 830, 600);" class="btn btn-primary  pull-right">-->
+                <!--                    <i class="fa fa-plus"></i>添加规则</i>-->
+                <!--                </button>-->
+                </span>
+            </h4>
+        </div>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0"
+               class="list_table">
+            <thead>
+            <tr>
+                <td width="5%"><div align="center">ID</div></td>
+                <td width="5%"><div align="center">用户名</div></td>
+                <td width="8%"><div align="center">真实姓名</div></td>
+                <td width="10%"><div align="center">性别</div></td>
+                <td width="10%"><div align="center">年龄</div></td>
+                <td width="13%"><div align="center">身份证号</div></td>
+                <td width="10%"><div align="center">身份证正面照</div></td>
+                <td width="10%"><div align="center">特殊身份</div></td>
+                <td width="10%"><div align="center">身份证明照</div></td>
+                <td width="9%"><div align="center">状态</div></td>
+                <td width="10%"><div align="center">操作</div></td>
+            </tr>
+
+            </thead>
+            <tbody>
+            <foreach name="data" item="vo">
+                <tr >
+                    <td height="50"><div align="center">{$vo.id}</div></td>
+                    <td><div align="center">{$vo.user_name}</div></td>
+                    <td><div align="center">{$vo.true_name}</div></td>
+                    <td><div align="center">{$vo.sex}</div></td>
+                    <td><div align="center">{$vo.age}</div></td>
+                    <td><div align="center">{$vo.card_id}</div></td>
+                    <td><div align="center"><img src="{$vo['shenfen_img']}" alt="" style="width: 30%;height: 25%;"></div></td>
+                    <td><div align="center">{$vo.sf_shuxin}</div></td>
+                    <td><div align="center"><img src="{$vo['front_img']}" alt="" style="width: 30%;height:25%;"></div></td>
+                    <if condition="$vo['stats'] eq 1">
+                        <td><div align="center">等待审核</div></td>
+                        <td><div align="center"> <a href="javascript:;" onclick='shenhe_data({$vo['id']})' data-toggle="tooltip" title="" class="btn btn-info" ><i class="fa fa-sitemap"></i></a></div></td>
+                    </if>
+                    <if condition="$vo['stats'] eq 2">
+                        <td><div align="center">审核通过</div></td>
+                        <td><div align="center">已成功</div></td>
+                    </if>
+                    <if condition="$vo['stats'] eq 3">
+                        <td><div align="center">审核失败</div></td>
+                        <td><div align="center">等待再次申请</div></td>
+                    </if>
+                </tr>
+            </foreach>
+            </tbody>
+
+        </table>
+    </div>
+    <script>
+        shenhe_data =  function(id){
+            if(confirm("确定通过吗？"))
+            {
+                $.post("{:U('User/shenhe_data')}",{'id':id},function(data){
+                    if(data == 0){
+                        alert("审核失败");
+                    }else{
+                        parent.layer.msg('审核成功,2秒后刷新页面');
+                        setTimeout(url_href = function () {
+                            window.location.href = data['url'];
+                        }, 2000);
+                    }
+                });
+            }else
+            {
+                return false;
+            }
+        }
+    </script>
+
+</block>

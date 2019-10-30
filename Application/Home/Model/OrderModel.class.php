@@ -543,7 +543,6 @@ class OrderModel extends BaseModel
         if (($id = intval($id)) === 0) {
             return array();   
         }
-        
         return $this->field(self::$createTime_d, true)
                 ->where(self::$id_d.'="%s"', $id)->find();
     }

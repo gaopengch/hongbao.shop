@@ -458,7 +458,7 @@ class CouponModel extends BaseModel
      */
     public function usableCoupons($user_id,$goods_id,$sum){
         $data = $data = M('coupon_list a')
-            ->join('db_coupon b on a.c_id=b.id')
+            ->join('db_coupon as b on a.c_id=b.id')
             ->field('a.id,a.c_id,a.user_id,a.send_time,a.status,b.name,b.money,b.condition,b.type,b.use_start_time,b.use_end_time,b.reduced_type,b.discount,b.time_type,b.limited_time,b.goods_class_type,b.goods_class,b.instructons')
             ->where(['a.user_id'=>$user_id,'status'=>0])
             ->select();

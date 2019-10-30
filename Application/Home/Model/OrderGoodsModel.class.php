@@ -89,15 +89,16 @@ class OrderGoodsModel extends BaseModel
         
         //整合编号
         $orderIds = Tool::characterJoin($data, 'order_id');
-       
+
         $orderGoods = $this->field('order_id,goods_id,goods_num,comment,status')->where('order_id in ('.$orderIds.')')->order('order_id DESC')->select();
+
         if (empty($orderGoods))
         {
             return array();
         }
       
         $parseOrder = array();
-         
+
         /**
          * 合并数组[相同的订单号]
          */
@@ -119,7 +120,7 @@ class OrderGoodsModel extends BaseModel
                 $parseOrder[$value['order_id']]['status'] .= ','.$value['goods_id'].':'.$value['status'];
             }
         }
-      
+
         //问题在这[拼接的时候错误现在可以了不, 好了不]
 
         foreach ($parseOrder as $key => & $value)

@@ -1171,4 +1171,73 @@ class UserController extends AuthController
         $this->assign(['data'=>$redElope]);
         $this->display();
     }
+    //个人资料申请
+    public function check_date(){
+        $data = M('true_name')
+            ->alias('tn')
+            ->field('ur.user_name,tn.*')
+            ->join('left join db_user as ur on tn.user_id = ur.id')
+            ->select();
+        foreach ($data as $k=>$v){
+            $data[$k]['sf_shuxin'] = M('sf_data')->where(['sf_id'=>$data[$k]['sf_status']])->getField('sf_shuxin');
+        }
+        $this->assign(['data'=>$data]);
+        $this->display();
+    }
+    //审核个人资料
+    public function shenhe_data(){
+       $id = I('post.id');
+       $uid = M('true_name')->where(['id'=>$id])->getField('user_id');
+       $res = M('true_name')->where(['id'=>$id])->save(['stats'=>2]);
+       M('user')->where(['id'=>$uid])->save(['is_true'=>1]);
+       if($res){
+           $this->ajaxReturn(array('res'=>1,'url'=>U('User/check_date')));
+       }else{
+            M('true_name')->where(['id'=>$id])->save(['stats'=>3]);
+           $this->ajaxReturn(0);
+       }
+    }
+    //特殊身份
+    public function sf_shuxin(){
+        $data = M('sf_data')->select();
+        $this->assign(['data'=>$data]);
+        $this->display();
+    }
+
+    //特殊身份添加
+    public function addShSx(){
+        $sf = M('sf_data')->add($_POST);
+        $status    = empty($sf) ? 0 : 1;
+        $message   = empty($sf) ? '添加失败' : '添加成功';
+        $this->ajaxReturnData($sf, $status, $message);
+    }
+    //编辑身份
+    public function sf_edit(){
+        $id = $_GET['id'];
+       $data = M('sf_data')->where(['sf_id'=>$id])->find();
+        $this->assign(['data'=>$data]);
+        $this->display();
+    }
+    //保存修改身份
+    public function sf_save(){
+        $id = I('post.sf_id');
+        $data = I('post.');
+        unset($data['sf_id']);
+     $sf = M('sf_data')->where(['sf_id'=>$id])->save($data);
+        if ($sf === false) {
+            $this->error('修改失败');
+        } else {
+            $this->success('修改成功');
+        }
+    }
+    //删除身份
+    public function sf_del(){
+        $id = I('post.id');
+        $res = M('sf_data')->where(['sf_id'=>$id])->delete();
+        if($res){
+            $this->ajaxReturn(array('res'=>1,'url'=>U('User/sf_shuxin')));
+        }else{
+            $this->ajaxReturn(0);
+        }
+    }
 }

@@ -131,8 +131,10 @@ class PayOrderController extends Controller
             $info['order_sn_id'] = $info[OrderModel::$orderSn_id_d].'-'.$info[OrderModel::$id_d].'-2';
         }
 
+
         $url = U('Order/order_myorder');
         $this->promptParse($info, '参数有误', $url);
+
 //        $info[OrderModel::$orderSn_id_d] = $info[OrderModel::$orderSn_id_d].'-'.$info[OrderModel::$id_d];
         $info['platform'] = 0;
         $data = $this->getPayConfigByDataBase($info);

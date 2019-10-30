@@ -543,7 +543,8 @@ class SettlementController extends Controller
         $goodsModel = BaseModel::getInstance(GoodsModel::class);
         // 分发
         $post = I('post.');
-      
+        $_SESSION['pay_type'] = $post['pay_type'];
+
   
         //修改提交来的数据最终价格  ------meng
         $prices = 0;

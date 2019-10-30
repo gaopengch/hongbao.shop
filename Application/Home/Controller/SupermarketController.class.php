@@ -146,7 +146,7 @@ class SupermarketController extends BaseController
         }
         $p = $page - 1;
         $data = $classLargeImg[$p];
-        return $classLargeImg;
+        return $data;
     }
 
     /**

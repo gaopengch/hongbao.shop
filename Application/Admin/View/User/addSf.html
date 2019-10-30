@@ -1,0 +1,82 @@
+<extend name="Public/publicHTML" />
+
+<block name='content'>
+    <link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet"
+          href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+    <section class="content ">
+        <!-- Main content -->
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-list"></i> 添加身份
+                    </h3>
+                </div>
+                <div class="panel-body ">
+                    <!--表单数据-->
+                    <form method="post" id="form">
+                        <!--通用信息-->
+                        <div class="tab-content col-md-10">
+                            <div class="tab-pane active" id="tab_tongyong">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td class="col-sm-2">身份属性：</td>
+                                        <td class="col-sm-4"><input type="text"
+                                                                    class="form-control validate" name="sf_shuxin">
+
+                                        </td>
+                                        <td class="col-sm-4">身份类型</td>
+                                    </tr>
+                                    <tr>
+                                        <td>红包金额：</td>
+                                        <td>
+                                            <input type="text" class="form-control validate" id="money" name="sf_hongbao"/>
+                                        </td>
+                                        <td class="col-sm-4">奖励红包</td>
+                                    </tr>
+
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td>操作</td>
+                                        <td ><input class="btn btn-primary" type="submit" onclick="addsfSx('form', '{:U('addShSx')}');" value="保存"></td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                    <!--表单数据-->
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="__COMMON__/js/jquery-form.js"></script>
+    <script src="__COMMON__/js/jquery.validate.min.js"></script>
+    <script src="__COMMON__/js/validateCustom.js?a={:time()}"></script>
+    <script src="__COMMON__/js/alert.js?a={:time()}"></script>
+    <script src="__JS__/user/user.js?a={:time()}"></script>
+    <script>
+        /**
+         * 添加身份属性
+         */
+        addsfSx = function(formId, url) {
+            var obj = $('#' + formId);
+            var rule = {};
+            var message = {};
+            return obj.validate({
+                rules : rule,
+                messages : message,
+                submitHandler : function() {
+                    var data = obj.formToArray();
+                    return Tool.ajax(url, data, function(res) {
+                        Tool.notice(res);
+                    });
+                }
+            })
+        }
+    </script>
+
+</block>

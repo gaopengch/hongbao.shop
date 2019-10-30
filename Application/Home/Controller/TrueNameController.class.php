@@ -20,34 +20,38 @@ class TrueNameController extends BaseController{
         $this->assign('active',$active);
         $user_id = $_SESSION['user_id'];
         $data = M('true_name')->where(['user_id'=>$user_id])->find();
-
+       $sf_data = M('sf_data')->select();
         $this->assign('data',$data);
-
+        $this->assign('sf_data',$sf_data);
         $this->display();
     }
 
     public function save_true_name(){
         $data = I('post.');
         $user_id = $_SESSION['user_id'];
-        $data['user_id'] = $user_id;
-        $id = M('true_name')->where(['user_id'=>$user_id])->find();
+        $card_id = I('post.card_id');
+        if(substr($card_id,14)%2 == 0){
+            $data['sex'] = '女';
+        }else{
+            $data['sex'] = '男';
+        }
+        $true_name = M('true_name');
+        $age = intval(date("Y")) - intval(substr($card_id,6,4));
+       $data['age'] = $age;
+        $data['user_id'] = intval($user_id);
+        $id = $true_name->where(['user_id'=>$user_id])->getField('id');
         if($id){
-            $res = M('true_name')->where(['user_id'=>$user_id])->save($data);
+            $true_name->where(['user_id'=>$user_id])->save($data);
         }else{
-            $res = M('true_name')->add($data);
+            $true_name->add($data);
         }
-        if($res){
-            M('user')->where(['id'=>$user_id])->setField('is_true',1);
+            $true_name->where("id= $id")->save(['stats'=>'1']);
             $this->success('添加成功',U('UserSet/security'));
-        }else{
-            $this->error('添加失败',U('true_name'));
-        }
 
     }
 
     public function addImg(){
         $img = $_FILES;
-
         if(($img["img"]["type"]=="image/png"||$img["img"]["type"]=="image/jpeg"||$img["img"]["type"]=="image/jpg")&&$img["img"]["size"]<1024000){
             $imgname = $img['img']['name'];
             $tmp = $img['img']['tmp_name'];

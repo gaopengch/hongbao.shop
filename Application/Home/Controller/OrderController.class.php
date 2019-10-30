@@ -206,8 +206,7 @@ class OrderController extends BaseController{
 
 
         //订单模型
-        $orderData = $this->getOrder(array($_SESSION['user_id']),'and status ="0"');
-
+        $orderData = $this->getOrder(array($_SESSION['user_id']),'and status = 0');
 
         //判断订单是否自动取消
 //        $orderData = $this->order_cancelled($orderData);
@@ -364,7 +363,7 @@ class OrderController extends BaseController{
         //获取订单商品信息
 
         $goodsData = OrderGoodsModel::getInitnation()->getGoodsInfoByOrder($data);
-       
+
         //传递商品模型
         //传递给商品表
 

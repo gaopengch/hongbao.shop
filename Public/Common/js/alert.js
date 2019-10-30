@@ -722,6 +722,13 @@
                 shade: false //不显示遮罩
             }, callBack);
         },
+        deleteDbData: function (callBack) {
+            var self = this;
+            return layer.confirm('您确定删除吗？', {
+                btn: ['提交', '取消'], //按钮
+                shade: false //不显示遮罩
+            }, callBack);
+        },
 
         /**
          * @desc 时间插件

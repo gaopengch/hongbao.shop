@@ -1,0 +1,93 @@
+<extend name="Public/publicHTML" />
+
+
+<block name='content'>
+    <link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="__CSS__/user/user.css" />
+    <section class="content">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-list"></i>身份类型
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="navbar navbar-default">
+
+                            <button type="button" onclick="Tool.alertEdit('{:U('addSf')}', '添加用户', 830, 600);" class="btn btn-primary  pull-right">
+                                <i class="fa fa-plus"></i>添加身份</i>
+                            </button>
+
+                    </div>
+                    <div class="list">
+                        <table width="100%" border="0" cellpadding="0" cellspacing="0"
+                               class="list_table">
+                            <thead>
+                            <tr>
+                                <td width="15%"><div align="center">ID</div></td>
+                                <td width="25%"><div align="center">身份类型</div></td>
+                                <td width="25%"><div align="center">红包</div></td>
+                                <td width="45%"><div align="center">操作</div></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <foreach name="data" item="vo">
+                                <tr >
+                                    <td height="50"><div align="center">{$vo.sf_id}</div></td>
+                                    <td><div align="center">{$vo.sf_shuxin}</div></td>
+                                    <td><div align="center">￥{$vo.sf_hongbao}元</div></td>
+                                    <td>
+                                        <div align="center"> <a class="a_button"  href="javascript:;" onclick="sf_edit({$vo.sf_id});">编辑</a>
+                                            <a class="a_button" href="javascript:;" onclick="sf_del({$vo.sf_id})">删除</a></div></td>
+                                    </td>
+                                </tr>
+                            </foreach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+    <script src="__COMMON__/js/alert.js"></script>
+    <script type="text/javascript">
+        var ADMIN_EDIT = "{:U('sf_edit')}?id=";
+    </script>
+    <script>
+        //编辑身份
+        function sf_edit(id) {
+            parent.layer.open({
+                type: 2,
+                shadeClose: true,
+                shade: 0.5,
+                area: ['600px', '350px'],
+                title: '编辑身份信息',
+                content: ADMIN_EDIT+id
+
+            });
+        }
+        function sf_del(id){
+            if(confirm("确定删除吗？"))
+            {
+                $.post("{:U('User/sf_del')}",{'id':id},function(data){
+                    if(data == 0){
+                        alert("删除失败");
+                    }else{
+                        parent.layer.msg('删除成功,2秒后刷新页面');
+                        setTimeout(url_href = function () {
+                            window.location.href = data['url'];
+                        }, 2000);
+                    }
+                });
+            }else
+            {
+                return false;
+            }
+        }
+    </script>
+
+
+</block>
